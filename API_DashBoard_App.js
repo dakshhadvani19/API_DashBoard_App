@@ -256,6 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
         error_div.className = "px-4 py-5 flex flex-col gap-y-2";
         for (let ind = 0; ind < 5; ind++) {
             const chip = document.createElement('p');
+            if(!errorList[ind])
+                chip.innerText=" ";
             chip.innerText = " ~ " + errorList[ind];
             chip.className = "w-auto p-2 h-fit bg-red-500/10 border border-red-500/20 text-red-400 rounded-md";
             error_div.appendChild(chip);
