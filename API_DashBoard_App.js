@@ -249,22 +249,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function display_Errors() {
-        const error_div = document.getElementById('error_history_div');
-        const recent_error = JSON.parse(localStorage.getItem('error_history')) || [];
-        error_div.innerHTML = "";
-        const errorList = Array.isArray(recent_error) ? recent_error : (recent_error ? [recent_error] : []);
-        error_div.className = "px-4 py-5 flex flex-col gap-y-2";
-        for (let ind = 0; ind < 5; ind++) {
-            const chip = document.createElement('p');
-            if(!errorList[ind])
-                chip.innerText=" ";
-            else
-                chip.innerText = " ~ " + errorList[ind];
-            chip.className = "w-auto p-2 h-fit bg-red-500/10 border border-red-500/20 text-red-400 rounded-md";
-            error_div.appendChild(chip);
-        }
+    const error_div = document.getElementById('error_history_div');
+    const recent_error = JSON.parse(localStorage.getItem('error_history')) || [];
+    
+    error_div.innerHTML = "";
+    const errorList = Array.isArray(recent_error) ? recent_error : [];
+    error_div.className = "px-4 py-5 flex flex-col gap-y-2";
+    const displayCount = Math.min(errorList.length, 5);
 
+    for (let ind = 0; ind < displayCount; ind++) {
+        const chip = document.createElement('p');
+        chip.innerText = " ~ " + errorList[ind];
+        chip.className = "w-auto p-2 h-fit bg-red-500/10 border border-red-500/20 text-red-400 rounded-md font-mono text-sm";
+        error_div.appendChild(chip);
     }
+    if (displayCount === 0) {
+        error_div.innerHTML = `<p class="text-neutral-500 italic text-center">System Log Clear: No errors detected.</p>`;
+    }
+}
 
     display_Errors();
 
